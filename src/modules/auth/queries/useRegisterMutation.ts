@@ -1,23 +1,21 @@
 import {useMutation} from "@tanstack/react-query";
 import authApi from "@/modules/auth/api/auth.api";
-import {AuthLoginBody} from "@/modules/auth/api/auth.api.types";
-import Cookies from "js-cookie";
+import {AuthRegisterBody} from "@/modules/auth/api/auth.api.types";
 import {useRouter} from "next/navigation";
 import {notifications} from "@mantine/notifications";
 
-export default function useLoginMutation() {
+export default function useRegisterMutation() {
     const router = useRouter()
 
     return useMutation({
-        mutationFn: (body: AuthLoginBody) => authApi.login(body),
+        mutationFn: (body: AuthRegisterBody) => authApi.register(body),
         onSuccess: (data) => {
-            Cookies.set('token', data.token, { expires: 1 });
             notifications.show({
-                title: 'Success!',
+                title: 'Greetings!',
                 message: data.message,
                 color: 'green'
             })
-            router.push('/dashboard')
+            router.push('/login')
         }
     })
 }

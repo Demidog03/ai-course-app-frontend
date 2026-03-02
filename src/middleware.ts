@@ -4,6 +4,7 @@ const publicRoutes = ['/login', '/register']
 
 export function middleware(req: NextRequest) {
     const token = req.cookies.get('token')?.value
+
     const { pathname } = req.nextUrl
 
     const isPublicRoute = publicRoutes.includes(pathname)
@@ -20,5 +21,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+    matcher: [
+        '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    ],
 }
