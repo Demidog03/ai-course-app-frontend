@@ -7,17 +7,24 @@ import {notifications} from "@mantine/notifications";
 
 export default function useLoginMutation() {
     const router = useRouter()
+    // const queryClient = useQueryClient()
 
     return useMutation({
         mutationFn: (body: AuthLoginBody) => authApi.login(body),
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             Cookies.set('token', data.token, { expires: 1 });
             notifications.show({
                 title: 'Success!',
                 message: data.message,
                 color: 'green'
             })
-            router.push('/dashboard')
+
+            if (data.user) {
+                Cookies.set('user', JSON.stringify(data.user))
+                router.push('/dashboard')
+            }
+
+            // queryClient.invalidateQueries({ queryKey: ['users'] })
         }
     })
 }

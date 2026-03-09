@@ -1,8 +1,12 @@
+'use client'
+
+import UserProfileWrapper from "@/modules/users/wrappers/UserProfileWrapper";
+
 function DashboardPage() {
     return (
-        <div>
+        <UserProfileWrapper>
             <h1></h1>
-        </div>
+        </UserProfileWrapper>
     );
 }
 

@@ -1,6 +1,9 @@
+import {UserProfile} from "@/modules/users/apis/users.api.types";
+
 export interface AuthLoginResponse {
     type: string;
     token: string;
+    user: UserProfile;
     message: string;
 }
 
