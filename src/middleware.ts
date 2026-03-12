@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {UserProfile, UserRolesEnum} from "@/modules/users/apis/users.api.types";
 
 const privateRoutes = [
-    { path: '/dashboard/test', allowedRoles: [UserRolesEnum.ADMIN] },
+    { path: '/courses/test', allowedRoles: [UserRolesEnum.ADMIN] },
 ]
 
 const publicRoutes = ['/login', '/register']
@@ -20,7 +20,7 @@ export function middleware(req: NextRequest) {
     }
 
     if (token && user && isPublicRoute) {
-        return NextResponse.redirect(new URL('/dashboard', req.url))
+        return NextResponse.redirect(new URL('/courses', req.url))
     }
 
     // Проверка пути по доступу (role guard)
@@ -28,7 +28,7 @@ export function middleware(req: NextRequest) {
 
     if (matchedRoute) {
         if (!user?.role?.name || !matchedRoute.allowedRoles.includes(user.role.name)) {
-            return NextResponse.redirect(new URL('/dashboard', req.url))
+            return NextResponse.redirect(new URL('/courses', req.url))
         }
     }
 
