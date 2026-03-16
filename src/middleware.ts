@@ -2,7 +2,8 @@ import {NextRequest, NextResponse} from "next/server";
 import {UserProfile, UserRolesEnum} from "@/modules/users/apis/users.api.types";
 
 const privateRoutes = [
-    { path: '/courses/test', allowedRoles: [UserRolesEnum.ADMIN] },
+    { path: '/courses', allowedRoles: [UserRolesEnum.USER, UserRolesEnum.AUTHOR, UserRolesEnum.ADMIN] },
+    { path: '/courses/:id', allowedRoles: [UserRolesEnum.USER, UserRolesEnum.AUTHOR, UserRolesEnum.ADMIN] },
 ]
 
 const publicRoutes = ['/login', '/register']

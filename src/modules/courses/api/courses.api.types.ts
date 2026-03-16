@@ -10,3 +10,7 @@ export interface Course {
     createdAt: string
     updatedAt: string
 }
+
+export interface GetCourseByIdResponse {
+    course: Course
+}

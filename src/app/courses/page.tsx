@@ -4,25 +4,34 @@ import UserProfileWrapper from "@/modules/users/wrappers/UserProfileWrapper";
 import WithSidebarWrapper from "@/modules/sidebar/wrappers/WithSidebarWrapper";
 import useGetCoursesQuery from "@/modules/courses/queries/useGetCoursesQuery";
 import CourseCard from "@/modules/courses/ui/CourseCard";
-import {SimpleGrid} from "@mantine/core";
+import classes from "../page.module.css";
+import {Center, Loader} from "@mantine/core";
 
 function CoursesPage() {
-    const { data: coursesData } = useGetCoursesQuery()
+    const { data: coursesData, isLoading } = useGetCoursesQuery()
 
     const courses = coursesData?.courses || []
+
+    if (isLoading) {
+        return (
+            <UserProfileWrapper>
+                <WithSidebarWrapper>
+                    <Center h="70vh">
+                        <Loader color="blue" type="dots" />
+                    </Center>
+                </WithSidebarWrapper>
+            </UserProfileWrapper>
+        );
+    }
 
     return (
         <UserProfileWrapper>
             <WithSidebarWrapper>
-                <SimpleGrid
-                    cols={{ base: 1, sm: 1, md: 2, lg: 3 }}
-                    spacing={{ base: 10, sm: 'xl' }}
-                    verticalSpacing={{ base: 'md', sm: 'xl' }}
-                >
+                <div className={classes.coursesGrid}>
                     {courses.map(course => (
                         <CourseCard key={course.id} course={course}/>
                     ))}
-                </SimpleGrid>
+                </div>
             </WithSidebarWrapper>
         </UserProfileWrapper>
     );

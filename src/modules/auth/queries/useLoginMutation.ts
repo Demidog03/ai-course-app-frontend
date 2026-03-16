@@ -21,7 +21,7 @@ export default function useLoginMutation() {
 
             if (data.user) {
                 Cookies.set('user', JSON.stringify(data.user))
-                router.push('/dashboard')
+                router.push('/courses')
             }
 
             // queryClient.invalidateQueries({ queryKey: ['users'] })

@@ -8,11 +8,9 @@ function makeQueryClient() {
     return new QueryClient({
         defaultOptions: {
             queries: {
-                // Устанавливаем staleTime выше 0, чтобы избежать лишних
-                // запросов на клиенте сразу после SSR-рендеринга
-                staleTime: 60 * 1000, // 1 минута
-                refetchOnWindowFocus: false, // Отключаем автоматический рефетч при переключении вкладок браузера (опционально)
-                retry: 1, // Количество попыток при ошибке
+                staleTime: 60 * 1000,
+                refetchOnWindowFocus: false,
+                retry: 0,
             },
         },
     })
