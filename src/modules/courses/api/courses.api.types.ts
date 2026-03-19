@@ -9,8 +9,19 @@ export interface Course {
     isPublished: boolean
     createdAt: string
     updatedAt: string
+    authorId: number
 }
 
 export interface GetCourseByIdResponse {
     course: Course
+}
+
+export interface UpdateCourseResponse {
+    course: Course
+}
+
+export interface UpdateCourseBody {
+    title: string
+    description: string
+    isPublished: boolean
 }

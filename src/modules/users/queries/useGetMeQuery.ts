@@ -6,5 +6,6 @@ export default function useGetMeQuery() {
     return useQuery({
         queryKey: USERS_QUERY_KEYS.me,
         queryFn: () => usersApi.getMe(),
+        refetchOnMount: false,
     })
 }

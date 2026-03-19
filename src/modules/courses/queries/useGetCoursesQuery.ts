@@ -1,3 +1,5 @@
+'use client'
+
 import {useQuery} from "@tanstack/react-query";
 import {COURSES_QUERY_KEYS} from "@/modules/courses/queries/courses.query.types";
 import coursesApi from "@/modules/courses/api/courses.api";

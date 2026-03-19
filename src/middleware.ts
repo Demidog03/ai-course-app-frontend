@@ -4,6 +4,7 @@ import {UserProfile, UserRolesEnum} from "@/modules/users/apis/users.api.types";
 const privateRoutes = [
     { path: '/courses', allowedRoles: [UserRolesEnum.USER, UserRolesEnum.AUTHOR, UserRolesEnum.ADMIN] },
     { path: '/courses/:id', allowedRoles: [UserRolesEnum.USER, UserRolesEnum.AUTHOR, UserRolesEnum.ADMIN] },
+    { path: '/courses/edit/:id', allowedRoles: [UserRolesEnum.AUTHOR, UserRolesEnum.ADMIN] },
 ]
 
 const publicRoutes = ['/login', '/register']

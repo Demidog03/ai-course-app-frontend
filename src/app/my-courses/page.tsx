@@ -2,21 +2,20 @@
 
 import UserProfileWrapper from "@/modules/users/wrappers/UserProfileWrapper";
 import WithSidebarWrapper from "@/modules/sidebar/wrappers/WithSidebarWrapper";
-import useGetCoursesQuery from "@/modules/courses/queries/useGetCoursesQuery";
-import CourseCard from "@/modules/courses/ui/CourseCard";
-import classes from "../page.module.css";
+import useGetMyCoursesQuery from "@/modules/courses/queries/useGetMyCoursesQuery";
 import {Center, Loader} from "@mantine/core";
+import classes from "@/app/page.module.css";
+import CourseCard from "@/modules/courses/ui/CourseCard";
 
-function CoursesPage() {
-    const { data: coursesData, isLoading } = useGetCoursesQuery()
+function Page() {
+    const { isLoading, data: coursesData } = useGetMyCoursesQuery()
 
     const courses = coursesData?.courses || []
 
     return (
         <UserProfileWrapper>
             <WithSidebarWrapper>
-                <h1>All courses</h1>
-
+                <h1>My courses</h1>
                 {isLoading && (
                     <Center h="70vh">
                         <Loader color="blue" type="dots" />
@@ -39,4 +38,4 @@ function CoursesPage() {
     );
 }
 
-export default CoursesPage;
+export default Page;

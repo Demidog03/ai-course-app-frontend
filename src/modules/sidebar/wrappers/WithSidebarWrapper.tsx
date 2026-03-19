@@ -4,20 +4,20 @@ import {useDisclosure} from "@mantine/hooks";
 import {AppShell, Avatar, Burger, NavLink} from "@mantine/core";
 import {ReactNode} from "react";
 import classes from "./sidebar-wrappers.module.css";
-import {IconHome2} from "@tabler/icons-react";
+import {IconCertificate, IconHome2, IconSchoolFilled} from "@tabler/icons-react";
 import {usePathname, useRouter} from "next/navigation";
 import useGetMeQuery from "@/modules/users/queries/useGetMeQuery";
 
 const topLinksData = [
     {
-        icon: IconHome2,
+        icon: IconSchoolFilled,
         label: 'Courses',
         route: '/courses'
     },
     {
-        icon: IconHome2,
-        label: 'Security',
-        route: '/security'
+        icon: IconCertificate,
+        label: 'My Courses',
+        route: '/my-courses'
     },
     {
         icon: IconHome2,

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import {Badge, Button, Card, Group, Image, Text} from "@mantine/core";
 import {Course} from "@/modules/courses/api/courses.api.types";
