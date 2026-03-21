@@ -22,3 +22,7 @@ export interface AuthRegisterBody {
     password: string;
     password_confirmation: string;
 }
+
+export interface AuthLogoutResponse {
+    message: string;
+}

@@ -6,6 +6,7 @@ export interface Course {
     id: number
     title: string
     description: string
+    coverImage: string | null
     isPublished: boolean
     createdAt: string
     updatedAt: string
@@ -20,8 +21,4 @@ export interface UpdateCourseResponse {
     course: Course
 }
 
-export interface UpdateCourseBody {
-    title: string
-    description: string
-    isPublished: boolean
-}
+export type UpdateCourseBody = FormData

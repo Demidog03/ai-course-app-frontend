@@ -22,7 +22,11 @@ async function getMyCourses(): Promise<GetCoursesResponse> {
 }
 
 async function updateCourse(id: string, body: UpdateCourseBody): Promise<UpdateCourseResponse> {
-    const response = await apiPrivate.put<UpdateCourseResponse>(`/courses/${id}`, body)
+    const response = await apiPrivate.put<UpdateCourseResponse>(`/courses/${id}`, body, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
     return response.data
 }
 

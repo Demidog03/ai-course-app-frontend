@@ -1,12 +1,13 @@
 'use client'
 
 import {useDisclosure} from "@mantine/hooks";
-import {AppShell, Avatar, Burger, NavLink} from "@mantine/core";
+import {AppShell, Avatar, Burger, Menu, NavLink} from "@mantine/core";
 import {ReactNode} from "react";
 import classes from "./sidebar-wrappers.module.css";
-import {IconCertificate, IconHome2, IconSchoolFilled} from "@tabler/icons-react";
+import {IconCertificate, IconDoorExit, IconHome2, IconSchoolFilled} from "@tabler/icons-react";
 import {usePathname, useRouter} from "next/navigation";
 import useGetMeQuery from "@/modules/users/queries/useGetMeQuery";
+import useLogoutMutation from "@/modules/auth/queries/useLogoutMutation";
 
 const topLinksData = [
     {
@@ -43,6 +44,7 @@ function WithSidebarWrapper({ children }: { children: ReactNode }) {
     const pathname = usePathname()
     const router = useRouter()
     const { data: profile } = useGetMeQuery()
+    const { mutate: logout } = useLogoutMutation()
 
     function openLink(route: string | undefined) {
         if (route) {
@@ -72,6 +74,9 @@ function WithSidebarWrapper({ children }: { children: ReactNode }) {
         />
     ));
 
+    function handleClickLogout() {
+        logout()
+    }
 
     return (
         <AppShell
@@ -95,7 +100,21 @@ function WithSidebarWrapper({ children }: { children: ReactNode }) {
                     <img src="/logo.png" alt="logo"/>
                 </div>
 
-                <Avatar color="cyan" radius="xl">{avatarInitials}</Avatar>
+                <Menu shadow="md" width={200}>
+                    <Menu.Target>
+                        <Avatar style={{ cursor: 'pointer' }} color="cyan" radius="xl">{avatarInitials}</Avatar>
+                    </Menu.Target>
+
+                    <Menu.Dropdown>
+                        <Menu.Item
+                            color="red"
+                            leftSection={<IconDoorExit size={14} />}
+                            onClick={handleClickLogout}
+                        >
+                            Logout
+                        </Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
             </AppShell.Header>
 
             <AppShell.Navbar className={classes.sidebar}>

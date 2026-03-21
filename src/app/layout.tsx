@@ -1,5 +1,6 @@
 import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css';
+import '@mantine/dropzone/styles.css';
 import {MantineProvider, ColorSchemeScript, createTheme} from '@mantine/core'
 import Providers from './provider'
 import {Notifications} from "@mantine/notifications";

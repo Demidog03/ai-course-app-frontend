@@ -17,11 +17,18 @@ function CourseCard({ course }: { course: Course }) {
         dateStyle: 'long',
     }).format(new Date(course.updatedAt || course.createdAt));
 
+    function getCoverImage() {
+        if (process.env.NEXT_PUBLIC_BASE_API_URL && course?.coverImage) {
+            return `${process.env.NEXT_PUBLIC_BASE_API_URL}/${course.coverImage}`;
+        }
+        return 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png'
+    }
+
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Card.Section>
                 <Image
-                    src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+                    src={getCoverImage()}
                     height={160}
                     alt="Norway"
                 />

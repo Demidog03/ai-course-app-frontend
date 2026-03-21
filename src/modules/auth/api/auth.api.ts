@@ -1,7 +1,7 @@
 import {apiPublic} from "@/lib/api-public";
 import {
     AuthLoginBody,
-    AuthLoginResponse,
+    AuthLoginResponse, AuthLogoutResponse,
     AuthRegisterBody,
     AuthRegisterResponse
 } from "@/modules/auth/api/auth.api.types";
@@ -16,6 +16,12 @@ async function register(body: AuthRegisterBody): Promise<AuthRegisterResponse> {
     return response.data
 }
 
-const authApi = { login, register }
+async function logout(): Promise<AuthLogoutResponse> {
+    const response = await apiPublic.get<AuthLogoutResponse>('/auth/logout')
+    return response.data
+}
+
+
+const authApi = { login, register, logout }
 
 export default authApi

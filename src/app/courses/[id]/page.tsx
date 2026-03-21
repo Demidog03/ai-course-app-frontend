@@ -11,7 +11,7 @@ import {
     Button,
     Center,
     Loader,
-    Stack, Flex,
+    Stack, Flex, Image,
 } from '@mantine/core';
 import {IconArrowLeft, IconCalendar, IconEdit} from '@tabler/icons-react'; // Если используешь tabler-icons
 import useGetCourseByIdQuery from "@/modules/courses/queries/useGetCourseByIdQuery";
@@ -42,6 +42,13 @@ export default function CourseDetailsPage() {
 
     function goToEditPage() {
         router.push(`/courses/edit/${course?.id}`)
+    }
+
+    function getCoverImage() {
+        if (process.env.NEXT_PUBLIC_BASE_API_URL && course?.coverImage) {
+            return `${process.env.NEXT_PUBLIC_BASE_API_URL}/${course.coverImage}`;
+        }
+        return 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png'
     }
 
     if (isLoading) {
@@ -113,6 +120,12 @@ export default function CourseDetailsPage() {
 
                     <Card withBorder shadow="sm" radius="md" p="xl">
                         <Stack gap="lg">
+                            <Image
+                                src={getCoverImage()}
+                                height={400}
+                                fit="cover"
+                                alt="Norway"
+                            />
                             <Group justify="space-between" align="flex-start">
                                 <Title order={1}>{course.title}</Title>
                                 <Badge
