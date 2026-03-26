@@ -21,12 +21,13 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import useUpdateCourse from "@/modules/courses/queries/useUpdateCourse";
 import {useMemo, useState} from "react";
 import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from '@mantine/dropzone';
+import surfaceClasses from "@/modules/courses/ui/course-surface.module.css";
 // import {useQueryClient} from "@tanstack/react-query";
 // import {COURSES_QUERY_KEYS} from "@/modules/courses/queries/courses.query.types";
 
 const courseEditSchema = z.object({
-    title: z.string().min(3, 'Title must be at least 3 characters'),
-    description: z.string().min(10, 'Title must be at least 10 characters'),
+    title: z.string().min(3, 'Название не короче 3 символов'),
+    description: z.string().min(10, 'Описание не короче 10 символов'),
     isPublished: z.boolean(),
 })
 
@@ -94,7 +95,7 @@ export default function EditCourseDetailsPage() {
                     src={getCoverImage()}
                     height={400}
                     fit="cover"
-                    alt="Norway"
+                    alt={course?.title ? `Обложка: ${course.title}` : 'Обложка курса'}
                 />
             )
         }
@@ -110,7 +111,7 @@ export default function EditCourseDetailsPage() {
             <UserProfileWrapper>
                 <WithSidebarWrapper>
                     <Center h="70vh">
-                        <Loader color="blue" type="dots" />
+                        <Loader color="brand" type="dots" />
                     </Center>
                 </WithSidebarWrapper>
             </UserProfileWrapper>
@@ -164,11 +165,11 @@ export default function EditCourseDetailsPage() {
                     </Flex>
 
                     <form>
-                        <Card withBorder shadow="sm" radius="md" p="xl">
+                        <Card withBorder radius="lg" p="xl" className={surfaceClasses.surface}>
                             <Stack gap="lg">
                                 <Flex justify="flex-end">
                                     <Switch
-                                        color="teal"
+                                        color="brand"
                                         defaultChecked={course.isPublished}
                                         {...register('isPublished')}
                                         label="Опубликовать"
@@ -185,7 +186,7 @@ export default function EditCourseDetailsPage() {
                                 <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>
                                     <Group justify="center" gap="xl" mih={120} style={{ pointerEvents: 'none' }}>
                                         <Dropzone.Accept>
-                                            <IconUpload size={52} color="var(--mantine-color-blue-6)" stroke={1.5} />
+                                            <IconUpload size={52} color="var(--mantine-color-brand-6)" stroke={1.5} />
                                         </Dropzone.Accept>
                                         <Dropzone.Reject>
                                             <IconX size={52} color="var(--mantine-color-red-6)" stroke={1.5} />
@@ -235,8 +236,13 @@ export default function EditCourseDetailsPage() {
                                 />
 
                                 <Group mt="xl">
-                                    <Button size="md" color="blue">
-                                        Начать обучение
+                                    <Button
+                                        size="md"
+                                        color="brand"
+                                        type="button"
+                                        onClick={() => router.push(`/courses/${course.id}`)}
+                                    >
+                                        Открыть страницу курса
                                     </Button>
 
                                     {/* Здесь в будущем можно добавить проверку роли,

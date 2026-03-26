@@ -24,7 +24,7 @@ apiPublic.interceptors.response.use(
          for (const err of error.response?.data?.errors || []) {
              notifications.show({
                  color: 'red',
-                 title: 'Error',
+                 title: 'Ошибка',
                  message: err.message,
              })
          }

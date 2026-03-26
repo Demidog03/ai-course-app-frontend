@@ -1,37 +1,36 @@
 import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css';
-import '@mantine/dropzone/styles.css';
-import {MantineProvider, ColorSchemeScript, createTheme} from '@mantine/core'
+import '@mantine/notifications/styles.css'
+import '@mantine/dropzone/styles.css'
+import { ColorSchemeScript } from '@mantine/core'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import Providers from './provider'
-import {Notifications} from "@mantine/notifications";
+import { MantineProviders } from './mantine-providers'
+import { Notifications } from '@mantine/notifications'
 
 export const metadata = {
-    title: 'My Adonis + Next App',
-    description: 'Production ready stack',
+    title: 'Курсы ИИ — образовательная платформа',
+    description: 'Онлайн-курсы и обучение',
 }
 
-const theme = createTheme({
-    cursorType: 'pointer',
-});
+const plusJakarta = Plus_Jakarta_Sans({
+    subsets: ['latin', 'latin-ext'],
+    weight: ['400', '500', '600', '700'],
+    variable: '--font-plus-jakarta',
+    display: 'swap',
+})
 
-export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="ru" suppressHydrationWarning>
-        <head>
-            <ColorSchemeScript />
-        </head>
-        <body>
-        <MantineProvider defaultColorScheme="light" theme={theme}>
-            <Notifications position="top-right" zIndex={1000} />
-            <Providers>
-                {children}
-            </Providers>
-        </MantineProvider>
-        </body>
+        <html lang="ru" className={plusJakarta.variable} suppressHydrationWarning>
+            <head>
+                <ColorSchemeScript defaultColorScheme="auto" />
+            </head>
+            <body>
+                <MantineProviders>
+                    <Notifications position="top-right" zIndex={1000} />
+                    <Providers>{children}</Providers>
+                </MantineProviders>
+            </body>
         </html>
     )
 }

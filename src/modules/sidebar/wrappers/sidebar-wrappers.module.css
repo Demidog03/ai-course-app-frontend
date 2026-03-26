@@ -4,20 +4,132 @@
     align-items: center;
     gap: 10px;
     justify-content: space-between;
-}
-.headerLeft {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.headerLeft img {
-    height: 50px;
+    /* Как у нижней панели: нейтральный «стеклянный» серый, без кофейного оттенка */
+    background: color-mix(in srgb, var(--mantine-color-body) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(1.12);
+    -webkit-backdrop-filter: blur(14px) saturate(1.12);
+    border-bottom: 1px solid color-mix(in srgb, var(--mantine-color-default-border) 85%, transparent);
 }
 
-.sidebar {
+.siteBrand {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 0;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.15s ease;
+}
+
+.siteBrand:hover {
+    opacity: 0.85;
+}
+
+.mainWithFloatingBar {
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    position: relative;
+    isolation: isolate;
+    background-color: var(--mantine-color-body);
+    background-image:
+        radial-gradient(
+            ellipse 120% 70% at 0% -15%,
+            color-mix(in srgb, var(--mantine-color-caramel-3) 38%, transparent) 0%,
+            transparent 52%
+        ),
+        radial-gradient(
+            ellipse 90% 55% at 100% 0%,
+            color-mix(in srgb, var(--mantine-color-brand-3) 32%, transparent) 0%,
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse 70% 45% at 50% 105%,
+            color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent) 0%,
+            transparent 42%
+        ),
+        radial-gradient(
+            circle at 18% 42%,
+            color-mix(in srgb, var(--mantine-color-caramel-2) 12%, transparent) 0%,
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 82% 58%,
+            color-mix(in srgb, var(--mantine-color-brand-2) 10%, transparent) 0%,
+            transparent 26%
+        );
+}
+
+.floatingBarWrap {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    padding: 0 12px max(12px, env(safe-area-inset-bottom)) 12px;
+}
+
+.floatingBar {
+    pointer-events: auto;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 4px;
+    width: 100%;
+    max-width: 28rem;
+    padding: 10px 8px;
+    border-radius: 1.5rem;
+    background: color-mix(in srgb, var(--mantine-color-body) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(1.12);
+    -webkit-backdrop-filter: blur(14px) saturate(1.12);
+    box-shadow:
+        0 6px 28px color-mix(in srgb, var(--mantine-color-brand-7) 14%, transparent),
+        0 2px 8px color-mix(in srgb, var(--mantine-color-brand-9) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--mantine-color-default-border) 85%, transparent);
+}
+
+.floatingTab {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 4px;
+    border-radius: 12px;
+    color: var(--mantine-color-dimmed);
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.floatingTab:hover:not(:disabled) {
+    background: var(--mantine-color-default-hover);
+    color: var(--mantine-color-text);
+}
+
+.floatingTab[data-active] {
+    color: var(--mantine-color-primary-filled);
+}
+
+.floatingTab[data-active] .floatingTabIcon {
+    color: var(--mantine-color-primary-filled);
+}
+
+.floatingTab:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.floatingTabIcon {
+    flex-shrink: 0;
+    color: inherit;
+}
+
+.floatingTabLabel {
+    text-align: center;
+    line-height: 1.15;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

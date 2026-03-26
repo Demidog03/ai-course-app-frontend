@@ -3,16 +3,16 @@
 import UserProfileWrapper from "@/modules/users/wrappers/UserProfileWrapper";
 import WithSidebarWrapper from "@/modules/sidebar/wrappers/WithSidebarWrapper";
 import dynamic from "next/dynamic";
-import {Button, Center, Paper, Stack, TextInput, Title} from "@mantine/core";
+import {Button, Center, Paper, Stack, Text, TextInput, Title} from "@mantine/core";
 import {Controller, useForm} from "react-hook-form";
 import {z} from "zod";
 import useCreateLessonMutation from "@/modules/lessons/queries/useCreateLessonMutation";
 import {useParams} from "next/navigation";
 
 const createLessonSchema = z.object({
-    title: z.string().min(3, 'Title must be at least 3 characters'),
+    title: z.string().min(3, 'Название не короче 3 символов'),
     content: z.any(),
-    orderIndex: z.number().min(0, 'Order index must be a positive number'),
+    orderIndex: z.number().min(0, 'Порядковый номер не может быть отрицательным'),
 })
 
 type CreateLessonForm = z.infer<typeof createLessonSchema>
@@ -60,7 +60,9 @@ function Page() {
                             />
 
                             <div>
-                                <label>Контент урока</label>
+                                <Text component="label" size="sm" fw={500} mb={6} display="block">
+                                    Контент урока
+                                </Text>
                                 <Controller
                                     name="content"
                                     control={control}

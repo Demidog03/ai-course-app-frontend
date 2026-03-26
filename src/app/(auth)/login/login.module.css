@@ -1,6 +1,18 @@
 .container {
-  height: 100dvh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background:
+        radial-gradient(
+            ellipse 130% 70% at 50% -15%,
+            color-mix(in srgb, var(--mantine-color-caramel-2) 55%, transparent),
+            transparent 55%
+        ),
+        radial-gradient(
+            ellipse 90% 50% at 100% 100%,
+            color-mix(in srgb, var(--mantine-color-brand-2) 40%, transparent),
+            transparent 50%
+        ),
+        var(--mantine-color-body);
 }

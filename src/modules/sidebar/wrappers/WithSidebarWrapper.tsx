@@ -1,46 +1,37 @@
 'use client'
 
-import {useDisclosure} from "@mantine/hooks";
-import {AppShell, Avatar, Burger, Menu, NavLink} from "@mantine/core";
-import {ReactNode} from "react";
-import classes from "./sidebar-wrappers.module.css";
-import {IconCertificate, IconDoorExit, IconHome2, IconSchoolFilled} from "@tabler/icons-react";
-import {usePathname, useRouter} from "next/navigation";
-import useGetMeQuery from "@/modules/users/queries/useGetMeQuery";
-import useLogoutMutation from "@/modules/auth/queries/useLogoutMutation";
+import { AppShell, Avatar, Box, Group, Menu, Text, UnstyledButton } from '@mantine/core'
+import { ReactNode } from 'react'
+import classes from './sidebar-wrappers.module.css'
+import {
+    IconActivity,
+    IconCertificate,
+    IconDoorExit,
+    IconHelp,
+    IconMessageQuestion,
+    IconSchoolFilled,
+} from '@tabler/icons-react'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import useGetMeQuery from '@/modules/users/queries/useGetMeQuery'
+import useLogoutMutation from '@/modules/auth/queries/useLogoutMutation'
+import { ThemeToggle } from '@/modules/ui/ThemeToggle'
 
-const topLinksData = [
-    {
-        icon: IconSchoolFilled,
-        label: 'Courses',
-        route: '/courses'
-    },
-    {
-        icon: IconCertificate,
-        label: 'My Courses',
-        route: '/my-courses'
-    },
-    {
-        icon: IconHome2,
-        label: 'Activity'
-    },
-];
+type NavItem = {
+    icon: typeof IconSchoolFilled
+    label: string
+    route?: string
+}
 
-const bottomLinksData = [
-    {
-        icon: IconHome2,
-        label: 'Help',
-        route: '/help'
-    },
-    {
-        icon: IconHome2,
-        label: 'Questions',
-        route: '/questions'
-    },
-];
+const navItems: NavItem[] = [
+    { icon: IconSchoolFilled, label: 'Курсы', route: '/courses' },
+    { icon: IconCertificate, label: 'Мои курсы', route: '/my-courses' },
+    { icon: IconActivity, label: 'Активность' },
+    { icon: IconHelp, label: 'Помощь', route: '/help' },
+    { icon: IconMessageQuestion, label: 'Вопросы' },
+]
 
 function WithSidebarWrapper({ children }: { children: ReactNode }) {
-    const [opened, { toggle }] = useDisclosure();
     const pathname = usePathname()
     const router = useRouter()
     const { data: profile } = useGetMeQuery()
@@ -52,85 +43,72 @@ function WithSidebarWrapper({ children }: { children: ReactNode }) {
         }
     }
 
-    const avatarInitials = profile?.fullName.split(' ').map(p => p[0]).join('')
-
-    const topLinks = topLinksData.map((item) => (
-        <NavLink
-            key={item.label}
-            active={pathname.startsWith(item.route || '___NOT_FOUND___')}
-            label={item.label}
-            leftSection={<item.icon size={16} stroke={1.5} />}
-            onClick={() => openLink(item.route)}
-        />
-    ));
-
-    const bottomLinks = bottomLinksData.map((item) => (
-        <NavLink
-            key={item.label}
-            active={pathname.startsWith(item.route || '___NOT_FOUND___')}
-            label={item.label}
-            leftSection={<item.icon size={16} stroke={1.5} />}
-            onClick={() => openLink(item.route)}
-        />
-    ));
-
-    function handleClickLogout() {
-        logout()
-    }
+    const avatarInitials = profile?.fullName.split(' ').map((p) => p[0]).join('')
 
     return (
-        <AppShell
-            padding="md"
-            header={{ height: 60 }}
-            navbar={{
-                width: 300,
-                breakpoint: 'sm',
-                collapsed: { mobile: !opened },
-            }}
-        >
+        <AppShell padding="md" header={{ height: 60 }}>
             <AppShell.Header className={classes.header}>
-                <div className={classes.headerLeft}>
-                    <Burger
-                        opened={opened}
-                        onClick={toggle}
-                        hiddenFrom="sm"
-                        size="sm"
-                    />
+                <Link href="/courses" className={classes.siteBrand}>
+                    <Text component="span" display="block" fw={700} size="lg" lh={1.15}>
+                        Курсы ИИ
+                    </Text>
+                    <Text component="span" display="block" size="xs" c="dimmed" lh={1.15} mt={2}>
+                        Образовательная платформа
+                    </Text>
+                </Link>
 
-                    <img src="/logo.png" alt="logo"/>
-                </div>
-
-                <Menu shadow="md" width={200}>
+                <Group gap="sm" wrap="nowrap">
+                    <ThemeToggle />
+                    <Menu shadow="md" width={200}>
                     <Menu.Target>
-                        <Avatar style={{ cursor: 'pointer' }} color="cyan" radius="xl">{avatarInitials}</Avatar>
+                        <Avatar style={{ cursor: 'pointer' }} color="brand" radius="xl">
+                            {avatarInitials}
+                        </Avatar>
                     </Menu.Target>
 
                     <Menu.Dropdown>
                         <Menu.Item
                             color="red"
                             leftSection={<IconDoorExit size={14} />}
-                            onClick={handleClickLogout}
+                            onClick={() => logout()}
                         >
-                            Logout
+                            Выйти
                         </Menu.Item>
                     </Menu.Dropdown>
-                </Menu>
+                    </Menu>
+                </Group>
             </AppShell.Header>
 
-            <AppShell.Navbar className={classes.sidebar}>
-                <div>
-                    {topLinks}
-                </div>
-                <div>
-                    {bottomLinks}
-                </div>
-            </AppShell.Navbar>
+            <AppShell.Main className={classes.mainWithFloatingBar}>{children}</AppShell.Main>
 
-            <AppShell.Main>
-                {children}
-            </AppShell.Main>
+            <div className={classes.floatingBarWrap} role="navigation" aria-label="Основная навигация">
+                <Box className={classes.floatingBar}>
+                    {navItems.map((item) => {
+                        const active =
+                            item.route != null && pathname.startsWith(item.route)
+                        return (
+                            <UnstyledButton
+                                key={item.label}
+                                className={classes.floatingTab}
+                                data-active={active || undefined}
+                                disabled={!item.route}
+                                onClick={() => openLink(item.route)}
+                            >
+                                <item.icon
+                                    size={22}
+                                    stroke={1.5}
+                                    className={classes.floatingTabIcon}
+                                />
+                                <Text size="xs" fw={500} className={classes.floatingTabLabel}>
+                                    {item.label}
+                                </Text>
+                            </UnstyledButton>
+                        )
+                    })}
+                </Box>
+            </div>
         </AppShell>
-    );
+    )
 }
 
-export default WithSidebarWrapper;
+export default WithSidebarWrapper

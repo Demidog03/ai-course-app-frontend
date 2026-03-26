@@ -15,15 +15,15 @@ function Page() {
     return (
         <UserProfileWrapper>
             <WithSidebarWrapper>
-                <h1>My courses</h1>
+                <h1 className={classes.pageTitle}>Мои курсы</h1>
                 {isLoading && (
                     <Center h="70vh">
-                        <Loader color="blue" type="dots" />
+                        <Loader color="brand" type="dots" />
                     </Center>
                 )}
                 {!isLoading && courses?.length < 1 && (
                     <Center h="70vh">
-                        <h2>No courses</h2>
+                        <h2>Курсов пока нет</h2>
                     </Center>
                 )}
                 {!isLoading && courses?.length > 0 && (

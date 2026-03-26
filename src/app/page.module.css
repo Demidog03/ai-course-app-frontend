@@ -1,5 +1,32 @@
 .coursesGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
+    padding-bottom: 0.5rem;
+}
+
+.pageTitle {
+    font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+    background: linear-gradient(
+        120deg,
+        var(--mantine-color-brand-7) 0%,
+        var(--mantine-color-caramel-6) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+:global([data-mantine-color-scheme='dark']) .pageTitle {
+    background: linear-gradient(
+        120deg,
+        var(--mantine-color-brand-3) 0%,
+        var(--mantine-color-caramel-3) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }

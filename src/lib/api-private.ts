@@ -31,7 +31,7 @@ apiPrivate.interceptors.response.use(
             console.error('Axios error:', error.message);
             for (const err of error.response?.data?.errors || []) {
                 notifications.show({
-                    title: 'Error',
+                    title: 'Ошибка',
                     message: err.message,
                 })
             }

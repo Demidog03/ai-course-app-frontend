@@ -15,8 +15,9 @@ export default function useLogoutMutation() {
 
             if (data.message) {
                 notifications.show({
+                    title: 'Выход',
                     message: data.message,
-                    color: 'green'
+                    color: 'green',
                 })
             }
 

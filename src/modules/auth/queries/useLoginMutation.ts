@@ -14,9 +14,9 @@ export default function useLoginMutation() {
         onSuccess: async (data) => {
             Cookies.set('token', data.token, { expires: 1 });
             notifications.show({
-                title: 'Success!',
+                title: 'Успешно',
                 message: data.message,
-                color: 'green'
+                color: 'green',
             })
 
             if (data.user) {

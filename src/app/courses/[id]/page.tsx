@@ -20,6 +20,7 @@ import WithSidebarWrapper from "@/modules/sidebar/wrappers/WithSidebarWrapper";
 import useGetMeQuery from "@/modules/users/queries/useGetMeQuery";
 import {UserRolesEnum} from "@/modules/users/apis/users.api.types";
 import {useMemo} from "react";
+import surfaceClasses from "@/modules/courses/ui/course-surface.module.css";
 
 export default function CourseDetailsPage() {
     const { id } = useParams();
@@ -56,7 +57,7 @@ export default function CourseDetailsPage() {
             <UserProfileWrapper>
                 <WithSidebarWrapper>
                     <Center h="70vh">
-                        <Loader color="blue" type="dots" />
+                        <Loader color="brand" type="dots" />
                     </Center>
                 </WithSidebarWrapper>
             </UserProfileWrapper>
@@ -108,7 +109,7 @@ export default function CourseDetailsPage() {
                         {isEditable && (
                             <Button
                                 variant="subtle"
-                                color="yellow"
+                                color="caramel"
                                 leftSection={<IconEdit size={16} />}
                                 onClick={goToEditPage}
                                 mb="md"
@@ -118,20 +119,39 @@ export default function CourseDetailsPage() {
                         )}
                     </Flex>
 
-                    <Card withBorder shadow="sm" radius="md" p="xl">
-                        <Stack gap="lg">
+                    <Card
+                        withBorder
+                        radius="lg"
+                        padding={0}
+                        className={surfaceClasses.surface}
+                    >
+                        <Card.Section className={surfaceClasses.detailHeroSection}>
                             <Image
                                 src={getCoverImage()}
                                 height={400}
                                 fit="cover"
-                                alt="Norway"
+                                alt={course.title}
                             />
-                            <Group justify="space-between" align="flex-start">
-                                <Title order={1}>{course.title}</Title>
+                        </Card.Section>
+                        <Stack gap="lg" p="xl">
+                            <Group
+                                justify="space-between"
+                                align="flex-start"
+                                wrap="nowrap"
+                                gap="sm"
+                            >
+                                <Title
+                                    order={1}
+                                    lineClamp={3}
+                                    style={{ flex: 1, minWidth: 0 }}
+                                >
+                                    {course.title}
+                                </Title>
                                 <Badge
-                                    color={course.isPublished ? 'green' : 'yellow'}
+                                    color={course.isPublished ? 'green' : 'caramel'}
                                     variant="light"
                                     size="lg"
+                                    style={{ flexShrink: 0 }}
                                 >
                                     {course.isPublished ? 'Опубликован' : 'Черновик'}
                                 </Badge>
@@ -147,7 +167,7 @@ export default function CourseDetailsPage() {
                             </Text>
 
                             <Group mt="xl">
-                                <Button size="md" color="blue">
+                                <Button size="md" color="brand">
                                     Начать обучение
                                 </Button>
 

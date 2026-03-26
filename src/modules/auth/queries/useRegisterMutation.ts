@@ -11,9 +11,9 @@ export default function useRegisterMutation() {
         mutationFn: (body: AuthRegisterBody) => authApi.register(body),
         onSuccess: (data) => {
             notifications.show({
-                title: 'Greetings!',
+                title: 'Регистрация прошла',
                 message: data.message,
-                color: 'green'
+                color: 'green',
             })
             router.push('/login')
         }
