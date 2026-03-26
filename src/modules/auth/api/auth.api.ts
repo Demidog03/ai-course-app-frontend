@@ -1,4 +1,4 @@
-import {apiPublic} from "@/lib/api-public";
+import {apiPublic} from "@/shared/lib/api-public";
 import {
     AuthLoginBody,
     AuthLoginResponse, AuthLogoutResponse,

@@ -6,17 +6,18 @@ import dynamic from "next/dynamic";
 import {Button, Center, Paper, Stack, Text, TextInput, Title} from "@mantine/core";
 import {Controller, useForm} from "react-hook-form";
 import {z} from "zod";
-import useCreateLessonMutation from "@/modules/lessons/queries/useCreateLessonMutation";
 import {useParams, useRouter} from "next/navigation";
 import {IconArrowLeft} from "@tabler/icons-react";
+import useGetLessonQuery from "@/modules/lessons/queries/useGetLessonQuery";
+import useUpdateLessonMutation from "@/modules/lessons/queries/useUpdateLessonMutation";
 
-const createLessonSchema = z.object({
+const editLessonSchema = z.object({
     title: z.string().min(3, 'Название не короче 3 символов'),
     content: z.any(),
     orderIndex: z.number().min(0, 'Порядковый номер не может быть отрицательным'),
 })
 
-type CreateLessonForm = z.infer<typeof createLessonSchema>
+type EditLessonForm = z.infer<typeof editLessonSchema>
 
 const DynamicEditor = dynamic(() => import('@/modules/editor/ui/Editor'),
     {
@@ -27,23 +28,45 @@ const DynamicEditor = dynamic(() => import('@/modules/editor/ui/Editor'),
 function Page() {
     const params = useParams();
     const courseId = Number(params.id);
+    const lessonId = Number(params.lesson_id);
     const router = useRouter()
 
-    const { mutate: createLesson } = useCreateLessonMutation()
-    const { register, control, handleSubmit } = useForm<CreateLessonForm>({
+    const { data: lessonData, isLoading } = useGetLessonQuery({ courseId, lessonId })
+    const lesson = lessonData?.lesson
+
+    const { mutate: updateLesson } = useUpdateLessonMutation()
+    const { register, control, handleSubmit } = useForm<EditLessonForm>({
         defaultValues: {
             title: '',
             content: undefined,
             orderIndex: 0
         },
+        values: lesson ? {
+            title: lesson?.title || '',
+            content: {
+                blocks: lesson?.content
+            },
+            orderIndex: lesson?.orderIndex || 0
+        } : undefined
     })
 
-    function onSubmit(data: CreateLessonForm) {
-        createLesson({
+    function onSubmit(data: EditLessonForm) {
+        updateLesson({
             ...data,
+            lessonId,
             courseId,
             content: JSON.stringify(data.content.blocks)
         })
+    }
+
+    if (isLoading) {
+        return (
+            <UserProfileWrapper>
+                <WithSidebarWrapper>
+                    <Center h="70vh">Загрузка урока...</Center>
+                </WithSidebarWrapper>
+            </UserProfileWrapper>
+        )
     }
 
     return (

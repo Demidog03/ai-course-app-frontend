@@ -33,13 +33,13 @@ function Editor({ value, onChange }: EditorProps) {
             })
 
             editorRef.current = editor
+        }
 
-            // при unmount
-            return () => {
-                if (editorRef.current && editorRef.current.destroy) {
-                    editorRef.current.destroy()
-                    editorRef.current = null
-                }
+        // при unmount
+        return () => {
+            if (editorRef.current && editorRef.current.destroy) {
+                editorRef.current.destroy()
+                editorRef.current = null
             }
         }
     }, [])

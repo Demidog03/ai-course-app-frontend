@@ -1,0 +1,104 @@
+/* Общая «поднятая» карточка в кофейной гамме */
+.surface {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--mantine-color-brand-4) 24%, transparent);
+    background:
+        linear-gradient(
+            168deg,
+            color-mix(in srgb, var(--mantine-color-body) 86%, var(--mantine-color-brand-1)) 0%,
+            var(--mantine-color-body) 42%,
+            color-mix(in srgb, var(--mantine-color-body) 90%, var(--mantine-color-caramel-1)) 100%
+        );
+    box-shadow:
+        0 1px 1px color-mix(in srgb, var(--mantine-color-brand-9) 4%, transparent),
+        0 16px 48px color-mix(in srgb, var(--mantine-color-brand-8) 9%, transparent),
+        inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+    overflow: hidden;
+}
+
+:global([data-mantine-color-scheme='dark']) .surface {
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.35),
+        0 18px 48px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 color-mix(in srgb, #fff 6%, transparent);
+}
+
+.surface::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--mantine-color-caramel-3) 35%, transparent),
+        transparent 40%,
+        transparent 60%,
+        color-mix(in srgb, var(--mantine-color-brand-4) 28%, transparent)
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+/* Сетка курсов: лёгкий подъём при наведении */
+.surfaceInteractive {
+    transition:
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.28s ease;
+}
+
+.surfaceInteractive:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 2px 4px color-mix(in srgb, var(--mantine-color-brand-9) 7%, transparent),
+        0 22px 56px color-mix(in srgb, var(--mantine-color-brand-7) 14%, transparent),
+        inset 0 1px 0 color-mix(in srgb, #fff 60%, transparent);
+}
+
+:global([data-mantine-color-scheme='dark']) .surfaceInteractive:hover {
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 24px 56px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent);
+}
+
+.cardImageSection {
+    position: relative;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.cardImageRoot :global(img) {
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.surfaceInteractive:hover .cardImageRoot :global(img) {
+    transform: scale(1.06);
+}
+
+.detailHeroSection {
+    position: relative;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.detailHeroSection::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        color-mix(in srgb, var(--mantine-color-body) 40%, transparent) 0%,
+        transparent 50%
+    );
+    pointer-events: none;
+}

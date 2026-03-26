@@ -17,29 +17,18 @@ import {IconArrowLeft, IconCalendar, IconEdit} from '@tabler/icons-react'; // Е
 import useGetCourseByIdQuery from "@/modules/courses/queries/useGetCourseByIdQuery";
 import UserProfileWrapper from "@/modules/users/wrappers/UserProfileWrapper";
 import WithSidebarWrapper from "@/modules/sidebar/wrappers/WithSidebarWrapper";
-import useGetMeQuery from "@/modules/users/queries/useGetMeQuery";
-import {UserRolesEnum} from "@/modules/users/apis/users.api.types";
-import {useMemo} from "react";
 import surfaceClasses from "@/modules/courses/ui/course-surface.module.css";
+import useCheckIfEditable from "@/shared/hooks/useCheckIfEditable";
 
 export default function CourseDetailsPage() {
     const { id } = useParams();
     const router = useRouter();
     const courseId = typeof id === 'string' ? id : null;
 
-    const { data: user } = useGetMeQuery()
     const { data: courseData, isLoading, isError } = useGetCourseByIdQuery(courseId || '')
     const course = courseData?.course;
 
-    const isEditable = useMemo(() => {
-        if (user?.role?.name === UserRolesEnum.ADMIN) {
-            return true
-        }
-        if (user?.role?.name === UserRolesEnum.AUTHOR && course?.authorId === user?.id) {
-            return true
-        }
-        return false
-    }, [user, course])
+    const { status: isEditable } = useCheckIfEditable(course?.authorId)
 
     function goToEditPage() {
         router.push(`/courses/edit/${course?.id}`)
@@ -50,6 +39,12 @@ export default function CourseDetailsPage() {
             return `${process.env.NEXT_PUBLIC_BASE_API_URL}/${course.coverImage}`;
         }
         return 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png'
+    }
+
+    function openLessonsPage() {
+        if (course?.id) {
+            router.push(`/courses/${course.id}/lessons`)
+        }
     }
 
     if (isLoading) {
@@ -108,8 +103,8 @@ export default function CourseDetailsPage() {
 
                         {isEditable && (
                             <Button
-                                variant="subtle"
-                                color="caramel"
+                                variant="light"
+                                color="yellow"
                                 leftSection={<IconEdit size={16} />}
                                 onClick={goToEditPage}
                                 mb="md"
@@ -147,14 +142,16 @@ export default function CourseDetailsPage() {
                                 >
                                     {course.title}
                                 </Title>
-                                <Badge
-                                    color={course.isPublished ? 'green' : 'caramel'}
-                                    variant="light"
-                                    size="lg"
-                                    style={{ flexShrink: 0 }}
-                                >
-                                    {course.isPublished ? 'Опубликован' : 'Черновик'}
-                                </Badge>
+                                {!course.isPublished && (
+                                    <Badge
+                                        color={course.isPublished ? 'green' : 'caramel'}
+                                        variant="light"
+                                        size="lg"
+                                        style={{ flexShrink: 0 }}
+                                    >
+                                        Черновик
+                                    </Badge>
+                                )}
                             </Group>
 
                             <Group gap="xs" c="dimmed">
@@ -167,7 +164,7 @@ export default function CourseDetailsPage() {
                             </Text>
 
                             <Group mt="xl">
-                                <Button size="md" color="brand">
+                                <Button onClick={openLessonsPage} size="md" color="brand">
                                     Начать обучение
                                 </Button>
 

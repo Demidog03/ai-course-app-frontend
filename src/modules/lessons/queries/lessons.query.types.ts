@@ -4,5 +4,6 @@ export const LESSONS_QUERY_PREFIX = 'lessons';
 
 export const LESSONS_QUERY_KEYS = {
    create: [LESSONS_QUERY_PREFIX, 'create'],
+   update: [LESSONS_QUERY_PREFIX, 'update'],
    get: (body: GetLessonBody) => [LESSONS_QUERY_PREFIX, 'get', body.courseId, body.lessonId],
 }

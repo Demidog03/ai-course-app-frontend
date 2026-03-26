@@ -5,6 +5,14 @@ export interface CreateLessonBody {
     orderIndex: number;
 }
 
+export interface UpdateLessonBody {
+    lessonId: number;
+    title: string;
+    courseId: number;
+    content: string;
+    orderIndex: number;
+}
+
 export interface GetLessonBody {
     lessonId: number;
     courseId: number;
@@ -21,6 +29,10 @@ export interface Lesson {
 }
 
 export interface CreateLessonResponse {
+    lesson: Lesson;
+}
+
+export interface UpdateLessonResponse {
     lesson: Lesson;
 }
 

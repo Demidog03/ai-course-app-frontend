@@ -1,6 +1,6 @@
 'use client'
 
-import { AppShell, Avatar, Box, Group, Menu, Text, UnstyledButton } from '@mantine/core'
+import {AppShell, Avatar, Box, Container, Group, Menu, Text, UnstyledButton} from '@mantine/core'
 import { ReactNode } from 'react'
 import classes from './sidebar-wrappers.module.css'
 import {
@@ -79,7 +79,11 @@ function WithSidebarWrapper({ children }: { children: ReactNode }) {
                 </Group>
             </AppShell.Header>
 
-            <AppShell.Main className={classes.mainWithFloatingBar}>{children}</AppShell.Main>
+            <AppShell.Main className={classes.mainWithFloatingBar}>
+                <Container size="xl">
+                    {children}
+                </Container>
+            </AppShell.Main>
 
             <div className={classes.floatingBarWrap} role="navigation" aria-label="Основная навигация">
                 <Box className={classes.floatingBar}>

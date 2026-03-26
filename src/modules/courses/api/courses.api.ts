@@ -1,4 +1,4 @@
-import {apiPrivate} from "@/lib/api-private";
+import {apiPrivate} from "@/shared/lib/api-private";
 import {
     GetCourseByIdResponse,
     GetCoursesResponse,

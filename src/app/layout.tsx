@@ -6,6 +6,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import Providers from './provider'
 import { MantineProviders } from './mantine-providers'
 import { Notifications } from '@mantine/notifications'
+import './globals.css'
 
 export const metadata = {
     title: 'Курсы ИИ — образовательная платформа',

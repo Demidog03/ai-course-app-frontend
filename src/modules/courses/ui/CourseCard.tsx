@@ -52,14 +52,16 @@ function CourseCard({ course }: { course: Course }) {
                     <Text fw={500} lineClamp={2} style={{ flex: 1, minWidth: 0 }}>
                         {course.title}
                     </Text>
-                    <Badge
-                        color={course.isPublished ? 'green' : 'caramel'}
-                        variant="light"
-                        size="lg"
-                        style={{ flexShrink: 0 }}
-                    >
-                        {course.isPublished ? 'Опубликован' : 'Черновик'}
-                    </Badge>
+                    {!course.isPublished && (
+                        <Badge
+                            color={course.isPublished ? 'green' : 'caramel'}
+                            variant="light"
+                            size="lg"
+                            style={{ flexShrink: 0 }}
+                        >
+                            Черновик
+                        </Badge>
+                    )}
                 </Group>
 
                 <Text size="sm" c="dimmed" lineClamp={3}>
