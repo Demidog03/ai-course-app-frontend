@@ -20,7 +20,9 @@ export function middleware(req: NextRequest) {
     if (!(token && user) && !isPublicRoute) {
         return NextResponse.redirect(new URL('/login', req.url))
     }
-
+    if (token && user && pathname === '/') {
+        return NextResponse.redirect(new URL('/courses', req.url))
+    }
     if (token && user && isPublicRoute) {
         return NextResponse.redirect(new URL('/courses', req.url))
     }

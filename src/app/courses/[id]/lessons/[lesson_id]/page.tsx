@@ -9,6 +9,7 @@ import LessonRenderer from "@/modules/lessons/ui/LessonRenderer";
 import {IconArrowLeft, IconEdit} from "@tabler/icons-react";
 import useCheckIfEditable from "@/shared/hooks/useCheckIfEditable";
 import useGetCourseByIdQuery from "@/modules/courses/queries/useGetCourseByIdQuery";
+import AITutorWrapper from "@/modules/ai-tutor/ui/AITutorWrapper";
 
 function Page() {
     const params = useParams()
@@ -59,7 +60,9 @@ function Page() {
                         {lesson?.title ?? 'Урок'}
                     </Title>
 
-                    <LessonRenderer content={lesson?.content} />
+                    <AITutorWrapper>
+                        <LessonRenderer content={lesson?.content} />
+                    </AITutorWrapper>
                 </Paper>
             </WithSidebarWrapper>
         </UserProfileWrapper>
