@@ -81,6 +81,7 @@ export default function AITutorWrapper({ children }: { children: JSX.Element }) 
 
     function askAITutor(question: string) {
         const text = selection?.toString()?.trim() ?? '';
+
         if (text && question) {
             askAITutorMutation({
                 prompt: question,
@@ -142,11 +143,11 @@ export default function AITutorWrapper({ children }: { children: JSX.Element }) 
                 title="Ответ AI ментора"
             >
                 <ScrollArea.Autosize mah="min(40vh, 700px)" type="scroll" offsetScrollbars>
-                    {isPending ? 
+                    {isPending ?
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                             <Loader color="brand" type="dots" />
                         </div>
-                    : aiTutorAnswer ? 
+                    : aiTutorAnswer ?
                     <div>
                         <AITutorAnswerContent markdown={aiTutorAnswer} />
                     </div> : null}
