@@ -11,7 +11,7 @@ import {
     Button,
     Center,
     Loader,
-    Stack, Flex, Image,
+    Stack, Flex, Image, Divider,
 } from '@mantine/core';
 import {IconArrowLeft, IconCalendar, IconEdit} from '@tabler/icons-react'; // Если используешь tabler-icons
 import useGetCourseByIdQuery from "@/modules/courses/queries/useGetCourseByIdQuery";
@@ -19,6 +19,7 @@ import UserProfileWrapper from "@/modules/users/wrappers/UserProfileWrapper";
 import WithSidebarWrapper from "@/modules/sidebar/wrappers/WithSidebarWrapper";
 import surfaceClasses from "@/modules/courses/ui/course-surface.module.css";
 import useCheckIfEditable from "@/shared/hooks/useCheckIfEditable";
+import CourseCommentCard from "@/modules/course-comments/ui/CourseCommentCard";
 
 export default function CourseDetailsPage() {
     const { id } = useParams();
@@ -79,7 +80,6 @@ export default function CourseDetailsPage() {
     const formattedDate = new Intl.DateTimeFormat('ru-RU', {
         dateStyle: 'long',
     }).format(new Date(course.createdAt));
-
 
     return (
         <UserProfileWrapper>
@@ -174,6 +174,8 @@ export default function CourseDetailsPage() {
                             </Group>
                         </Stack>
                     </Card>
+                    <Divider my="sm" />
+                    <CourseCommentCard courseId={Number(id)} />
                 </Container>
             </WithSidebarWrapper>
         </UserProfileWrapper>
